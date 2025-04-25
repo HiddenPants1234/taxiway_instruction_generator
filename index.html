@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Taxi-Instruction Generator</title>
+    <link rel="stylesheet" href="styles/index.css">
+    <link rel="stylesheet" href="styles/navbar.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="logo_container">
+            <img src="resources/airplane-icon---item-2--vector-magz--free-download-vector-graphics-4.png" alt="Logo" class="logo">
+            <span class="title">Interaktiver Taxi-Instruction Generator</span>
+        </div>
+        <ul class="nav_links">
+            <li><a href="index.html" class="nav_button active">Generator</a></li>
+            <li><a href="infos.html" class="nav_button">Infos</a></li>
+            <li><a href="kontakt.html" class="nav_button">Kontakt</a></li>
+        </ul>
+    </nav>
+
+    <div id="main_container">
+        <div id="map_container">
+            <div id="content_wrapper">
+
+                <div id="side_content">
+                    <div class="dropdown-container">
+                        <label for="airportSelector">Flughafen auswählen:</label>
+                        <select id="airportSelector">
+                            <option value="lowl">LOWL - Linz</option>
+                            <option value="lowk">LOWK - Klagenfurt</option>
+                            <option value="lowi">LOWI - Innsbruck</option>
+                            <option value="lows">LOWS - Salzburg</option>
+                            <option value="lowg">LOWG – Graz</option>
+                        </select>
+                    </div>
+
+                    <button id="skipTaxiwaysBtn" style="display:none;" onclick="proceedFromTaxiways()">➔ Weiter zu Holding Point</button>
+
+                    <div id="selectionDisplay"></div>
+
+                    <button onclick="undoLastStep()">🔙 Letzten Schritt rückgängig machen</button>
+                </div>
+
+                <div id="map"></div>
+
+            </div>
+        </div>
+    </div>
+
+    <div id="popup">
+        <span id="close-popup" onclick="closePopup()">X</span>
+        <h2>Taxi-Instructions</h2>
+        <p id="taxiInstructions"></p>
+    </div>
+
+    <script src="./script/airports/lows.js"></script>
+    <script src="./script/airports/lowg.js"></script>
+    <script src="./script/airports/lowi.js"></script>
+    <script src="./script/airports/lowk.js"></script>
+    <script src="./script/airports/lowl.js"></script>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="./script/index.js"></script>
+</body>
+</html>

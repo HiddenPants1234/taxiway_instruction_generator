@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kontakt</title>
+    <link rel="stylesheet" href="styles/kontakt.css">
+    <link rel="stylesheet" href="styles/navbar.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="logo_container">
+            <img src="resources/airplane-icon---item-2--vector-magz--free-download-vector-graphics-4.png" alt="Logo" class="logo">
+            <span class="title">Interaktiver Taxi-Instruction Generator</span>
+        </div>
+        <ul class="nav_links">
+            <li>
+                <a href="index.html" class="nav_button" id="generator">Generator</a>
+            </li>
+            <li>
+                <a href="infos.html" class="nav_button" id="infos">Infos</a>
+            </li>
+            <li>
+                <a href="kontakt.html" class="nav_button active" id="contact">Kontakt</a>
+            </li>
+        </ul>
+    </nav>
+
+    <div class="form">
+        <form action="">
+            <div class="row">
+                <div class="label">
+                    <label for="name">Name</label>
+                </div>
+                <div class="input">
+                    <input type="text" id="name" name="name" placeholder="Name">
+                </div>
+            </div>
+            <div class="row">
+                <div class="label">
+                    <label for="email">Email</label>
+                </div>
+                <div class="input">
+                    <input type="email" id="email" name="email" placeholder="Email">
+                </div>
+            </div>
+            <div class="row">
+                <div class="label">
+                    <label for="betreff">Betreff</label>
+                </div>
+                <div class="input">
+                    <input type="text" id="betreff" name="betreff" placeholder="Betreff">
+                </div>
+            </div>
+            <div class="row">
+                <div class="label">
+                    <label for="nachricht">Nachricht</label>
+                </div>
+                <div class="input">
+                    <textarea id="nachricht" name="nachricht" placeholder="Nachricht" style="height: 200px;"></textarea>
+                </div>
+            </div>
+            <div class="row">
+                <input type="submit" value="Verschicken">
+            </div>
+        </form>
+    </div>
+
+
+
+</body>
+</html>

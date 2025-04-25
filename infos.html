@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Infos</title>
+    <link rel="stylesheet" href="styles/infos.css">
+    <link rel="stylesheet" href="styles/navbar.css">
+    <script src="script/infos.js" defer></script>
+</head>
+<body>
+    <div id="main_container">
+        <nav class="navbar">
+            <div class="logo_container">
+                <img src="resources/airplane-icon---item-2--vector-magz--free-download-vector-graphics-4.png" alt="Logo" class="logo">
+                <span class="title">Interaktiver Taxi-Instruction Generator</span>
+            </div>
+            <ul class="nav_links">
+                <li><a href="index.html" class="nav_button" id="generator">Generator</a></li>
+                <li><a href="infos.html" class="nav_button active" id="infos">Infos</a></li>
+                <li><a href="kontakt.html" class="nav_button" id="contact">Kontakt</a></li>
+            </ul>
+        </nav>
+    
+        <div class="info_container" id="info_container">
+            <div class="top">
+                <div class="heading">
+                    <h1 id="airport_name">Flughafen Wien-Schwechat</h1>
+                    <h2 id="airport_code">IATA: VIE / ICAO: LOWW</h2>
+                </div>
+                <div id="dropdown_container">
+                    <select id="airport_selector" onchange="changeImages(this.value)">
+                        <option value="0">Wien-Schwechat</option>
+                        <option value="1">Salzburg</option>
+                        <option value="2">Linz</option>
+                        <option value="3">Graz</option>
+                        <option value="4">Klagenfurt</option>
+                        <option value="5">Innsbruck</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="text">
+                <p>Hier wird die Flughafenbeschreibung erscheinen...</p>
+            </div>
+            
+            <div class="image_container">
+                <img class="image_box" id="airport_img_1" src="" alt="Image 1">
+                <img class="image_box" id="airport_img_2" src="" alt="Image 2">
+                <img class="image_box" id="airport_img_3" src="" alt="Image 3">
+            </div>
+        </div>
+    </div> 
+</body>
+</html>
