@@ -9,6 +9,7 @@ html, body {
 }
 
 #info_container {
+    padding: 10px;
     background: no-repeat;
     background-size: 100%;
     position: relative;

@@ -1,5 +1,3 @@
-// index.js – mit Undo-Funktion & Anzeige der Auswahl
-
 let map;
 let overlay;
 let currentAirport = null;
@@ -153,14 +151,14 @@ function enableGroup(group) {
 
 function generateInstructions() {
     const parts = [];
-    if (selected.positions) parts.push(`von ${selected.positions.name}`);
+    if (selected.positions) parts.push(`from ${selected.positions.name}`);
     if (selected.exits) parts.push(`via ${selected.exits.name}`);
     if (selected.taxiways.length > 0) {
-        const names = selected.taxiways.map(t => t.name).join(" → ");
-        parts.push(`über ${names}`);
+        const names = selected.taxiways.map(t => t.name).join(" , ");
+        parts.push(`and ${names}`);
     }
-    if (selected.holdpoints) parts.push(`zum Haltepunkt ${selected.holdpoints.name}`);
-    if (selected.runways) parts.push(`auf Piste ${selected.runways.name}`);
+    if (selected.holdpoints) parts.push(`Holdingpoint ${selected.holdpoints.name}`);
+    if (selected.runways) parts.push(`Runway ${selected.runways.name}`);
 
     return `Taxi ${parts.join(" ")}.`;
 }
@@ -235,8 +233,8 @@ function updateSelectionDisplay() {
     display.innerHTML = `
         <strong>Aktuelle Auswahl:</strong><br>
         🅿️ Position: ${selected.positions?.name || '–'}<br>
-        🛫 Exit: ${selected.exits?.name || '–'}<br>
-        🛩️ Taxiways: ${selected.taxiways.map(t => t.name).join(", ") || '–'}<br>
+        🚪 Exit: ${selected.exits?.name || '–'}<br>
+        🛣️ Taxiways: ${selected.taxiways.map(t => t.name).join(", ") || '–'}<br>
         ⛔ Holding Point: ${selected.holdpoints?.name || '–'}<br>
         🛬 Runway: ${selected.runways?.name || '–'}
     `;

@@ -19,8 +19,7 @@ class Lows {
         };
 		
 		this.taxiways = {
-			"L1": [100,100],
-			"L2": [100,200]
+			"L": [800, 1450],
 		};
 	
         this.holdpoints = {
