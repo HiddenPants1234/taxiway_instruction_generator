@@ -7,13 +7,7 @@ class Lowl {
 			"Main Apron": [1300, 2150],
 			"Military Apron": [900, 1050]
         };
-		
-		this.taxiways = {
-			"V": [1150, 2250],
-			"G": [1545, 1600],
-            "D": [610, 1700]
-		};
-	
+
         this.holdpoints = {
             "A": [1250, 805],
             "B": [850, 1480],

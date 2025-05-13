@@ -9,10 +9,6 @@ class Lowi {
             "Hangar Nord": [1150, 1950]
         };
 
-        this.taxiways = {
-            "L": [650, 1500]
-        }
-
         this.holdpoints = {
             "A": [1300, 750],
             "B": [400, 2330],

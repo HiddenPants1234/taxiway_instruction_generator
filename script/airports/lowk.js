@@ -11,12 +11,7 @@ class Lowk {
 			"Apron East II": [1700, 730],
             "Apron South": [1230, 130]
         };
-		
-		this.taxiways = {
-			"L": [1580, 650],
-            "M": [1755, 450]
-		};
-	
+
         this.holdpoints = {
             "B": [1550, 490],
             "C": [1400, 790],

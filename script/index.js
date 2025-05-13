@@ -5,16 +5,16 @@ let currentAirport = null;
 let selected = {
     positions: null,
     exits: null,
-    taxiways: [],
     holdpoints: null,
     runways: null,
 };
 
-const selectionSteps = ['positions', 'exits', 'taxiways', 'holdpoints', 'runways'];
+const selectionSteps = ['positions', 'exits', 'holdpoints', 'runways'];
 let activeSteps = [];
 let currentStepIndex = 0;
 
 const airportMap = {
+    "loww": new Loww(),
     "lowl": new Lowl(),
     "lowg": new Lowg(),
     "lows": new Lows(),
@@ -29,7 +29,7 @@ document.addEventListener("DOMContentLoaded", () => {
         loadAirport(selectedCode);
     });
 
-    loadAirport("lowl");
+    loadAirport("loww");
 });
 
 function loadAirport(code) {
@@ -49,7 +49,7 @@ function loadAirport(code) {
     resetAll();
 
     activeSteps = selectionSteps.filter(group => {
-        if (group === 'exits' || group === 'taxiways') {
+        if (group === 'exits') {
             return currentAirport[group] !== undefined;
         }
         return true;
@@ -80,27 +80,9 @@ function addMarkers(locations, color, group) {
         .on('click', () => {
             const expectedGroup = activeSteps[currentStepIndex];
             if (group !== expectedGroup) {
-				const isTaxiwayStep = expectedGroup === 'taxiways';
-				const isTaxiway = group === 'taxiways';
-
-				// Taxiway darf nur dann gewählt werden, wenn Taxiway wirklich gerade an der Reihe ist
-				if (!(isTaxiway && isTaxiwayStep)) {
-					alert(`Bitte in der richtigen Reihenfolge wählen: ${expectedGroup.toUpperCase()} ist aktuell dran.`);
-					return;
-				}
-			}
-
-
-            if (group === 'taxiways') {
-                if (!selected.taxiways.find(t => t.name === name)) {
-                    selected.taxiways.push({ name, marker });
-                    highlightMarker(marker, getHighlightColorForGroup(group));
-                    updateSelectionDisplay();
-                } else {
-                    alert("Dieser Taxiway wurde bereits ausgewählt.");
-                }
+                alert(`Bitte in der richtigen Reihenfolge wählen: ${expectedGroup.toUpperCase()} ist aktuell dran.`);
                 return;
-            }
+			}
 
             selected[group] = { name, marker };
             highlightMarker(marker, getHighlightColorForGroup(group));
@@ -131,7 +113,6 @@ function enableGroup(group) {
     map.eachLayer((layer) => {
         if (layer.options?.group === group) {
             const isSelected =
-                (group === 'taxiways' && selected.taxiways.some(t => t.marker === layer)) ||
                 selected[group]?.marker === layer;
 
             layer.setStyle({
@@ -139,26 +120,21 @@ function enableGroup(group) {
             });
         }
     });
-	
-	const skipBtn = document.getElementById("skipTaxiwaysBtn");
-	if (group === 'taxiways') {
-		skipBtn.style.display = "block";
-	} 
-	else {
-		skipBtn.style.display = "none";
-	}
 }
 
 function generateInstructions() {
     const parts = [];
     if (selected.positions) parts.push(`from ${selected.positions.name}`);
     if (selected.exits) parts.push(`via ${selected.exits.name}`);
-    if (selected.taxiways.length > 0) {
-        const names = selected.taxiways.map(t => t.name).join(" , ");
-        parts.push(`and ${names}`);
-    }
-    if (selected.holdpoints) parts.push(`Holdingpoint ${selected.holdpoints.name}`);
-    if (selected.runways) parts.push(`Runway ${selected.runways.name}`);
+    if (selected.holdpoints) {
+        if(selected.exits) {
+            parts.push(`and Holdingpoint ${selected.holdpoints.name}`)
+        }
+        else{
+            parts.push(`via Holdingpoint ${selected.holdpoints.name}`)
+        }
+    };
+    if (selected.runways) parts.push(`to Runway ${selected.runways.name}`);
 
     return `Taxi ${parts.join(" ")}.`;
 }
@@ -199,29 +175,21 @@ function resetAll() {
 }
 
 function undoLastStep() {
-    if (currentStepIndex === 0 && selected.taxiways.length === 0) return;
+    if (currentStepIndex === 0) return;
 
     const currentGroup = activeSteps[Math.max(currentStepIndex - 1, 0)];
 
-    if (currentGroup === 'taxiways' && selected.taxiways.length > 0) {
-        const lastTaxiway = selected.taxiways.pop();
-        lastTaxiway.marker.setStyle({
-            color: lastTaxiway.marker.options.originalColor,
-            fillColor: lastTaxiway.marker.options.originalColor,
+    currentStepIndex--;
+    const removed = selected[currentGroup];
+    if (removed?.marker) {
+        removed.marker.setStyle({
+            color: removed.marker.options.originalColor,
+            fillColor: removed.marker.options.originalColor,
             fillOpacity: 0.5,
         });
-    } else {
-        currentStepIndex--;
-        const removed = selected[currentGroup];
-        if (removed?.marker) {
-            removed.marker.setStyle({
-                color: removed.marker.options.originalColor,
-                fillColor: removed.marker.options.originalColor,
-                fillOpacity: 0.5,
-            });
-        }
-        selected[currentGroup] = null;
     }
+
+    selected[currentGroup] = null;
     enableGroup(activeSteps[currentStepIndex]);
     updateSelectionDisplay();
 }
@@ -234,7 +202,6 @@ function updateSelectionDisplay() {
         <strong>Aktuelle Auswahl:</strong><br>
         🅿️ Position: ${selected.positions?.name || '–'}<br>
         🚪 Exit: ${selected.exits?.name || '–'}<br>
-        🛣️ Taxiways: ${selected.taxiways.map(t => t.name).join(", ") || '–'}<br>
         ⛔ Holding Point: ${selected.holdpoints?.name || '–'}<br>
         🛬 Runway: ${selected.runways?.name || '–'}
     `;
@@ -244,7 +211,6 @@ function getColorForGroup(group) {
     return {
         positions: 'blue',
         exits: 'green',
-        taxiways: 'orange',
         holdpoints: 'red',
         runways: 'black',
     }[group];
@@ -254,7 +220,6 @@ function getHighlightColorForGroup(group) {
     return {
         positions: 'darkblue',
         exits: 'darkgreen',
-        taxiways: 'darkorange',
         holdpoints: 'darkred',
         runways: 'gray',
     }[group];
@@ -264,7 +229,6 @@ function proceedFromTaxiways() {
     if (activeSteps[currentStepIndex] === 'taxiways') {
         currentStepIndex++;
         enableGroup(activeSteps[currentStepIndex]);
-        document.getElementById("skipTaxiwaysBtn").style.display = "none";
         updateSelectionDisplay();
     }
 }

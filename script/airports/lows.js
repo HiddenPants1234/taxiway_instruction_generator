@@ -17,10 +17,6 @@ class Lows {
             "Exit 3": [890, 1230],
             "Exit 4": [580, 1690]
         };
-		
-		this.taxiways = {
-			"L": [800, 1450],
-		};
 	
         this.holdpoints = {
             "B": [1620, 270],

@@ -10,7 +10,7 @@
 <body>
     <nav class="navbar">
         <div class="logo_container">
-            <img src="resources/airplane-icon---item-2--vector-magz--free-download-vector-graphics-4.png" alt="Logo" class="logo">
+            <img src="resources/airplane_logo.png" alt="Logo" class="logo">
             <span class="title">Interaktiver Taxi-Instruction Generator</span>
         </div>
         <ul class="nav_links">
@@ -27,7 +27,8 @@
     </nav>
 
     <div class="form">
-        <form action="">
+        <form method="POST" id="email_form">
+            <input type="hidden" name="access_key" value="2c70dc37-a3be-42de-94e3-4ab31d705497">
             <div class="row">
                 <div class="label">
                     <label for="name">Name</label>
@@ -63,10 +64,51 @@
             <div class="row">
                 <input type="submit" value="Verschicken">
             </div>
+
+            <div id="result"></div>
         </form>
     </div>
 
+    <script>
+        const form = document.getElementById('email_form');
+        const result = document.getElementById('result');
 
+        form.addEventListener('submit', function(e) {
+        e.preventDefault();
+        const formData = new FormData(form);
+        const object = Object.fromEntries(formData);
+        const json = JSON.stringify(object);
+        result.innerHTML = "Please wait..."
+
+            fetch('https://api.web3forms.com/submit', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json'
+                    },
+                    body: json
+                })
+                .then(async (response) => {
+                    let json = await response.json();
+                    if (response.status == 200) {
+                        result.innerHTML = "Form submitted successfully";
+                    } else {
+                        console.log(response);
+                        result.innerHTML = json.message;
+                    }
+                })
+                .catch(error => {
+                    console.log(error);
+                    result.innerHTML = "Something went wrong!";
+                })
+                .then(function() {
+                    form.reset();
+                    setTimeout(() => {
+                        result.style.display = "none";
+                    }, 3000);
+                });
+        });
+    </script>
 
 </body>
 </html>

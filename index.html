@@ -11,7 +11,7 @@
 <body>
     <nav class="navbar">
         <div class="logo_container">
-            <img src="resources/airplane-icon---item-2--vector-magz--free-download-vector-graphics-4.png" alt="Logo" class="logo">
+            <img src="resources/airplane_logo.png" alt="Logo" class="logo">
             <span class="title">Interaktiver Taxi-Instruction Generator</span>
         </div>
         <ul class="nav_links">
@@ -29,6 +29,7 @@
                     <div class="dropdown-container">
                         <label for="airportSelector">Flughafen auswählen:</label>
                         <select id="airportSelector">
+                            <option value="loww">LOWW - Wien</option>
                             <option value="lowl">LOWL - Linz</option>
                             <option value="lowk">LOWK - Klagenfurt</option>
                             <option value="lowi">LOWI - Innsbruck</option>
@@ -36,8 +37,6 @@
                             <option value="lowg">LOWG – Graz</option>
                         </select>
                     </div>
-
-                    <button id="skipTaxiwaysBtn" style="display:none;" onclick="proceedFromTaxiways()">➔ Weiter zu Holding Point</button>
 
                     <div id="selectionDisplay"></div>
 
@@ -56,6 +55,7 @@
         <p id="taxiInstructions"></p>
     </div>
 
+    <script src="./script/airports/loww.js"></script>
     <script src="./script/airports/lows.js"></script>
     <script src="./script/airports/lowg.js"></script>
     <script src="./script/airports/lowi.js"></script>
