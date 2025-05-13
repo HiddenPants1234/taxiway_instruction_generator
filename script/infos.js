@@ -38,7 +38,6 @@ function changeImages(setNumber) {
         });
 }
 
-// Automatisch Wien beim ersten Laden anzeigen und Dropdown korrekt setzen
 document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("airport_selector").value = "0";
     changeImages(0);
