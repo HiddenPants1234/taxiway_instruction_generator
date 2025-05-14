@@ -42,3 +42,7 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("airport_selector").value = "0";
     changeImages(0);
 });
+
+function toggleMenu() {
+    document.getElementById('navLinks').classList.toggle('active');
+}

@@ -232,3 +232,7 @@ function proceedFromTaxiways() {
         updateSelectionDisplay();
     }
 }
+
+function toggleMenu() {
+    document.getElementById('navLinks').classList.toggle('active');
+}
